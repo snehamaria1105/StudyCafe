@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastry & Café Themed Counseling</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f5e6e1; /* Soft pastel beige */
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff9f1; /* Soft creamy background */
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #c58d7d; /* Café brown */
+            margin-bottom: 20px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #f7c6a3; /* Pastel peach */
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .message-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .message-box {
+            background-color: #f7c6a3; /* Pastel peach */
+            padding: 10px 20px;
+            border-radius: 15px;
+            max-width: 60%;
+            margin: 10px 0;
+            position: relative;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-box:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #f7c6a3; /* Pastry peach */
+        }
+
+        .input-container {
+            margin-top: 20px;
+        }
+
+        .user-input {
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 2px solid #f3a9a1; /* Soft pastel red */
+            outline: none;
+            width: 70%;
+            margin-right: 10px;
+            background-color: #fef3e6;
+        }
+
+        .send-btn {
+            padding: 10px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            background-color: #c58d7d; /* Café brown */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .send-btn:hover {
+            background-color: #b0785d;
+        }
+
+        .counselor-message {
+            display: none;
+            font-size: 1.2em;
+            color: #c58d7d;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Wanna Talk?</h1>
+        <p>Chat with your Café Counselor and get advice!</p>
+
+        <!-- Avatar & Message Container -->
+        <div class="avatar-container">
+            <div class="avatar">
+                <img src="https://www.pngkit.com/png/full/102-1029847_icon-profile-avatar-clip-art.png" alt="Counselor Avatar">
+            </div>
+        </div>
+
+        <div class="message-container" id="messageContainer">
+            <!-- Counselor's Messages -->
+            <div class="message-box" id="counselorMessage">
+                <p>Hi there! How can I assist you with your studies today?</p>
+            </div>
+        </div>
+
+        <!-- User Input -->
+        <div class="input-container">
+            <input type="text" id="userInput" class="user-input" placeholder="Type your message...">
+            <button class="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="counselor-message" id="loadingMessage">
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script>
+        // Get elements
+        const messageContainer = document.getElementById('messageContainer');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.querySelector('.send-btn');
+        const counselorMessage = document.getElementById('counselorMessage');
+        const loadingMessage = document.getElementById('loadingMessage');
+
+        // Send user message and show counselor's response
+        function sendMessage() {
+            const userMessage = userInput.value;
+
+            if (userMessage.trim() === '') {
+                return;
+            }
+
+            // Display user message
+            const userMessageBox = document.createElement('div');
+            userMessageBox.classList.add('message-box');
+            userMessageBox.style.backgroundColor = "#f3a9a1"; /* Light pastel red */
+            userMessageBox.style.color = "#fff";
+            userMessageBox.innerHTML = <p>${userMessage}</p>;
+            messageContainer.appendChild(userMessageBox);
+
+            // Clear input
+            userInput.value = '';
+            userInput.focus();
+
+            // Show loading and counselor's message
+            loadingMessage.style.display = 'block';
+
+            // Simulate delay and show counselor's response
+            setTimeout(function() {
+                loadingMessage.style.display = 'none';
+
+                // Counselor's response
+                const counselorReply = "I'm here to help! Have you tried breaking your study tasks into smaller chunks?";
+                
+                const counselorMessageBox = document.createElement('div');
+                counselorMessageBox.classList.add('message-box');
+                counselorMessageBox.style.backgroundColor = "#f7c6a3"; /* Soft pastel peach */
+                counselorMessageBox.style.color = "#4a4a4a";
+                counselorMessageBox.innerHTML = <p>${counselorReply}</p>;
+                messageContainer.appendChild(counselorMessageBox);
+
+                // Scroll to the bottom
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }, 1500);
+        }
+    </script>
+
+</body>
+</html>
